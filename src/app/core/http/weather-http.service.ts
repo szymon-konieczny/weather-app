@@ -6,13 +6,12 @@ import { catchError } from 'rxjs/operators';
 
 import { HttpService } from './http.service';
 import { DateService } from '../services/date.service';
+import { ICityRes, IWeatherDataRes } from 'src/app/shared/interfaces/weather-widget.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WeatherHttpService {
-
-  private readonly CURRENT_DAY = '2019-07-30';
 
   constructor(
     private http: HttpClient,
@@ -20,15 +19,15 @@ export class WeatherHttpService {
     private dateService: DateService,
   ) {}
 
-  public loadCitiesList(): Observable<any[]> {
-    return this.http.get<any[]>(this.httpService.createApiUrl('city')).pipe(
+  public loadCitiesList(): Observable<ICityRes[]> {
+    return this.http.get<ICityRes[]>(this.httpService.createApiUrl('city')).pipe(
       catchError(error => this.httpService.handleError(error)),
     );
   }
 
-  public getSelectedCityData(cityId: number): Observable<any> {
-    const currentDay = this.dateService.getCurrentDay();
-    return this.http.get<any>(this.httpService.createApiUrl(`city/${cityId}/weather?date=${currentDay}`)).pipe(
+  public getSelectedCityData(cityId: number): Observable<IWeatherDataRes> {
+    const currentDay = this.dateService.parseDate();
+    return this.http.get<IWeatherDataRes>(this.httpService.createApiUrl(`city/${cityId}/weather?date=${currentDay}`)).pipe(
       catchError(error => this.httpService.handleError(error)),
     );
   }

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://dev-weather-api.azurewebsites.net/api/',
+  apiUrl: 'http://dev-weather-api.azurewebsites.net/api',
 };
 
 /*
