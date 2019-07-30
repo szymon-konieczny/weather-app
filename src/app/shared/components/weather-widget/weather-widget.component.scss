@@ -1,0 +1,55 @@
+.weather-data__container {
+  max-width: 600px;
+}
+
+.inline-group {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+}
+
+.tiles {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.day-tile {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.city-select {
+  min-width: 200px;
+  border: none;
+  background: transparent;
+  font-size: 2rem;
+}
+
+.section {
+  &-left,
+  &-right {
+    width: 50%;
+  }
+
+  &-left .inline-group {
+    justify-content: flex-start;
+  }
+
+  .overcast {
+    &-image {
+      height: 40px;
+    }
+
+    &-temperature {
+      align-self: flex-start;
+    }
+  }
+}

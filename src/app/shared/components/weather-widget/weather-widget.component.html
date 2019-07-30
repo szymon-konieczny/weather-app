@@ -1,1 +1,41 @@
-<p>weather-widget works!</p>
+<form [formGroup]="weatherForm" class="widget-wrapper">
+  <select
+    class="city-select"
+    placeholder="Choose the city"
+    formControlName="cityId">
+    <option *ngFor="let city of (cities$ | async)" [value]="city.id">{{ city?.name }}</option>
+  </select>
+  <div *ngIf="(selectedCityWeatherData$ | async) as days; else noWeatherData">
+    <div class="weather-data__container">
+      <div class="inline-group">
+        <div class="section-left">
+          <p>{{ dateService.parseDate(currentDayWeather?.date, 'dddd, MMMM DD') }}</p>
+          <p>Overcast</p>
+          <div class="inline-group">
+            <img class="overcast-image" src="assets/images/{{ currentDayWeather?.type | weatherType }}.png" class="weather-icon">
+            <p class="overcast-temperature">{{ currentDayWeather?.temperature }}<span class="temperature-unit">&deg;F</span></p>
+          </div>
+        </div>
+        <div class="section-right">
+          <p>Precipitation: <span>{{ currentDayWeather?.precipitation }}</span></p>
+          <p>Humidity: <span>{{ currentDayWeather?.humidity }}</span></p>
+          <p>Wind: <span>{{ currentDayWeather?.windInfo?.speed + ' mph ' + currentDayWeather?.windInfo?.direction }}</span></p>
+          <p>PollenCount: <span>{{ currentDayWeather?.pollenCount }}</span></p>
+        </div>
+      </div>
+      <div class="weekdays-wrapper">
+        <ul class="inline-group tiles">
+          <li class="day-tile" *ngFor="let dayWeather of days">
+            <div>{{ dateService.isToday(dayWeather?.date) ? 'Today' : dateService.parseDate(dayWeather?.date, 'dddd') }}</div>
+            <img src="assets/images/{{ dayWeather?.type | weatherType }}.png" class="weather-icon">
+            <div>{{ dayWeather?.temperature }}&deg;</div>
+            <div>Pollen {{ dayWeather?.pollenCount }}</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <ng-template #noWeatherData>
+    <p>There's no weather data to show.</p>
+  </ng-template>
+</form>

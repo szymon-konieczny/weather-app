@@ -7,14 +7,11 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class HttpService {
-
-  constructor() {}
-
-  public handleError(err): Observable<never> {
+  public handleError(err: Error): Observable<never> {
     return throwError(err);
   }
 
-  public createApiUrl(path: string) {
+  public createApiUrl(path: string): string {
     return `${environment.apiUrl}/${path}`;
   }
 }

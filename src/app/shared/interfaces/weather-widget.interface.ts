@@ -2,11 +2,11 @@ export enum WeatherTypes {
   RainLight = 'rain_light',
   Cloudy = 'cloudy',
   PartlyCloudy = 'partly_cloudy',
-  RainSCloudy = 'rain_s_cloudy',
+  RainAndCloudy = 'rain_s_cloudy',
   Sunny = 'sunny',
 }
 
-export interface ICity {
+export interface ICityRes {
   id: number;
   name: string;
 }
@@ -16,9 +16,9 @@ export interface IWindowInfo {
   direction: string;
 }
 
-export interface IWeatherDataResponse {
+export interface IWeatherDataRes {
   cityId: number;
-  date: Date;
+  date: string;
   temperature: number;
   precipitation: number;
   humidity: number;

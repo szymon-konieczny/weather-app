@@ -6,10 +6,12 @@ import * as moment from 'moment';
   providedIn: 'root'
 })
 export class DateService {
+  public parseDate(date?: string, format = 'YYYY-MM-DD'): string {
+    return moment(date).format(format);
+  }
 
-  constructor() {}
-
-  public getCurrentDay() {
-    return moment().format('YYYY-MM-DD');
+  public isToday(date: string) {
+    const currentDate = this.parseDate();
+    return this.parseDate(date) === this.parseDate(currentDate);
   }
 }
