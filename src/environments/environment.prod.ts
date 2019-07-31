@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiUrl: 'http://dev-weather-api.azurewebsites.net/api',
 };
