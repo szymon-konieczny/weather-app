@@ -11,7 +11,7 @@
         [value]="city.id">{{ city?.name }}</option>
     </select>
   </label>
-  <div *ngIf="(selectedCityWeatherData$ | async) as days; else noWeatherData">
+  <div *ngIf="(selectedCityWeatherData$ | async) as days">
     <div class="weather-data__container">
       <div class="column">
         <div class="value">{{ dateService.parseDate(currentDayWeather?.date, 'dddd, MMMM DD') }}</div>
@@ -48,7 +48,4 @@
       </div>
     </div>
   </div>
-  <ng-template #noWeatherData>
-    <div>There's no weather data to show.</div>
-  </ng-template>
 </form>
