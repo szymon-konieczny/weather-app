@@ -1,41 +1,51 @@
 <form [formGroup]="weatherForm" class="widget-wrapper">
-  <select
-    class="city-select"
-    placeholder="Choose the city"
-    formControlName="cityId">
-    <option *ngFor="let city of (cities$ | async)" [value]="city.id">{{ city?.name }}</option>
-  </select>
-  <div *ngIf="(selectedCityWeatherData$ | async) as days; else noWeatherData">
+  <label for="citySelect" class="select-wrapper">
+    <select
+      id="citySelect"
+      class="city-select"
+      placeholder="Choose the city"
+      formControlName="cityId">
+      <option 
+        class="option"
+        *ngFor="let city of (cities$ | async)"
+        [value]="city.id">{{ city?.name }}</option>
+    </select>
+  </label>
+  <div *ngIf="(selectedCityWeatherData$ | async) as days">
     <div class="weather-data__container">
+      <div class="column">
+        <div class="value">{{ dateService.parseDate(currentDayWeather?.date, 'dddd, MMMM DD') }}</div>
+        <div class="value">Overcast</div>
+      </div>
       <div class="inline-group">
         <div class="section-left">
-          <p>{{ dateService.parseDate(currentDayWeather?.date, 'dddd, MMMM DD') }}</p>
-          <p>Overcast</p>
           <div class="inline-group">
-            <img class="overcast-image" src="assets/images/{{ currentDayWeather?.type | weatherType }}.png" class="weather-icon">
-            <p class="overcast-temperature">{{ currentDayWeather?.temperature }}<span class="temperature-unit">&deg;F</span></p>
+            <img class="overcast-image" src="assets/images/{{ currentDayWeather?.type | weatherType }}.png">
+            <div class="overcast-temperature">{{ currentDayWeather?.temperature }}<span class="temperature-unit">&deg;F</span></div>
           </div>
         </div>
         <div class="section-right">
-          <p>Precipitation: <span>{{ currentDayWeather?.precipitation }}</span></p>
-          <p>Humidity: <span>{{ currentDayWeather?.humidity }}</span></p>
-          <p>Wind: <span>{{ currentDayWeather?.windInfo?.speed + ' mph ' + currentDayWeather?.windInfo?.direction }}</span></p>
-          <p>PollenCount: <span>{{ currentDayWeather?.pollenCount }}</span></p>
+          <div>Precipitation: <span class="value">{{ currentDayWeather?.precipitation }}</span></div>
+          <div>Humidity: <span class="value">{{ currentDayWeather?.humidity }}</span></div>
+          <div>Wind: <span class="value">{{ currentDayWeather?.windInfo?.speed + ' mph ' + currentDayWeather?.windInfo?.direction }}</span></div>
+          <div>Pollen Count: <span class="value">{{ currentDayWeather?.pollenCount }}</span></div>
         </div>
       </div>
       <div class="weekdays-wrapper">
         <ul class="inline-group tiles">
           <li class="day-tile" *ngFor="let dayWeather of days">
-            <div>{{ dateService.isToday(dayWeather?.date) ? 'Today' : dateService.parseDate(dayWeather?.date, 'dddd') }}</div>
+            <div class="weekday">{{ dateService.isToday(dayWeather?.date) ? 'Today' : dateService.parseDate(dayWeather?.date, 'dddd') }}</div>
             <img src="assets/images/{{ dayWeather?.type | weatherType }}.png" class="weather-icon">
-            <div>{{ dayWeather?.temperature }}&deg;</div>
-            <div>Pollen {{ dayWeather?.pollenCount }}</div>
+            <div class="temperatures-wrapper">
+              <div class="temperature">{{ dayWeather?.temperature }}&deg;</div>
+              <div class="temperature night">{{ dayWeather?.temperature }}&deg;</div>
+            </div>
+            <div class="pollen">
+              <div>Pollen</div><div class="value">{{ dayWeather?.pollenCount }}</div>
+            </div>
           </li>
         </ul>
       </div>
     </div>
   </div>
-  <ng-template #noWeatherData>
-    <p>There's no weather data to show.</p>
-  </ng-template>
 </form>
